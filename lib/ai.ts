@@ -2,9 +2,9 @@ import OpenAI from 'openai';
 import { ChatMessage, Project, Event } from './types';
 import { getProjects, getEvents } from './db';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+function getOpenAI() {
+  return new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+}
 
 const SYSTEM_PROMPT = `당신은 "해커톤스토어" AI 비서입니다.
 대학생들의 프로젝트 활동(해커톤, ICPBL, 동아리, 교내대회)을 도와줍니다.
@@ -163,7 +163,7 @@ ${ragContext}
     { role: 'user', content: userMessage },
   ];
 
-  const completion = await openai.chat.completions.create({
+  const completion = await getOpenAI().chat.completions.create({
     model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
     messages,
     max_tokens: 2048,
