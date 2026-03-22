@@ -6,6 +6,7 @@ frontend:
         - npm ci
     build:
       commands:
+        - env | grep -E '^(OPENAI_API_KEY|APP_REGION|PROJECTS_TABLE|EVENTS_TABLE)=' >> .env.production
         - npm run build
   artifacts:
     baseDirectory: .next
